@@ -1,0 +1,41 @@
+<!--
+public function test() {
+	
+    $second = 5 ;
+    $showMsg = '页面跳转中' ;
+    $this->assign('second', $second)->assign('showMsg', $showMsg) ;
+    $templateContent =  $this->fetch() ;
+
+    //重定向到New模块的Category操作
+    $this->redirect('New/category', array('cate_id' => 2), $second,  $templateContent);  
+}
+-->
+<span id="redirect">{$showMsg|rtrim='.'}</span>
+<span id="wait" >{$second}</span>
+<script type="text/javascript">
+    (function () {
+        var redirectTag = document.getElementById('redirect'),  wait = document.getElementById('wait') ;
+        var content =  redirectTag.innerHTML ; 
+        var i = 0 ; 
+        
+        // 重复一个字符串几次 
+        function repeat(str, num){ 
+            return new Array( num + 1 ).join( str ); 
+        }
+        
+        function loopWait() {
+            var pointCnt = 3 ;
+            var pointStr = repeat('.',  (i++ % pointCnt) + 1 );   // [1 - pointCnt] 之间循环
+            redirectTag.innerHTML =  content + pointStr;
+        }
+        // loopWait() ;
+        var interval = setInterval(loopWait, 800);
+        var interval2 = setInterval(function() {
+            var time = --wait.innerHTML;
+            if(time <= 0) {
+                clearInterval(interval) ;
+                clearInterval(interval2) ;
+            }
+        }, 1000)
+    })();
+</script>
